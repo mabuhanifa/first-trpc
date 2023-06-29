@@ -1,9 +1,12 @@
 import { initTRPC } from "@trpc/server";
 import { createExpressMiddleware } from "@trpc/server/adapters/express";
+import cors from "cors";
 import express from "express";
 
 const app = express();
 const port = 8080;
+app.use(express.json());
+app.use(cors());
 
 app.get("/", (req, res) => {
   res.send("Hello from api-server");
@@ -21,6 +24,8 @@ const appRouter = t.router({
     return true;
   }),
 });
+
+export type AppRouter = typeof appRouter;
 
 app.use(
   "/trpc",
